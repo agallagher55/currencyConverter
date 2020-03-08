@@ -39,10 +39,11 @@ async function convert(){
     console.log(`Converting function...`)
     resultsEl.textContent = "Loading..."
 
+    // Get values of input
     const value1 = dropdownOne.value.split("-")[0].trim();
     const value2 = dropdownTwo.value.split("-")[0].trim();
-
     const conversionAmount = convertInput.value;
+    
     console.log(`Need to convert ${conversionAmount} ${value1} to ${value2}`)
 
     // Get converted money symbol
@@ -52,31 +53,32 @@ async function convert(){
     console.log(symbData)
     const currSymbol = symbData[`${value2}`]['currencySymbol']
     const currName = symbData[`${value2}`]['currencyName']
-
-    console.log(symbData)
-    console.log(currSymbol)
-    console.log(typeof currSymbol)
-
     
     // Run conversion with endpoint
     const query = `apiKey=${key}&q=${value1}_${value2}`;
 
+    // Get data
     const response = await fetch(`${myEndpoint}convert?${query}`);
     let data = await response.json();
     data = data.results;
     console.log(data);
 
+    // Determine Amounts
     const conversionFactor = data[`${value1}_${value2}`]['val'];
-    const convertedAmt = (conversionFactor*parseFloat(conversionAmount)).toFixed(2);
+    let convertedAmt = (conversionFactor*parseFloat(conversionAmount)).toFixed(2);
+    isNaN(convertedAmt) ? convertedAmt = "Please provide an amount to convert!" : convertedAmt
 
     // Write Results
-    if(currSymbol){
+    if(currSymbol && !isNaN(convertedAmt)){
         resultsEl.textContent = `${currSymbol}${convertedAmt} ${currName}s`;
     }
     else{
+        if (!isNaN(convertedAmt))
         resultsEl.textContent = `${convertedAmt} ${currName}s`;
+        else {
+            resultsEl.textContent = `${convertedAmt}`
+        }
     }
-    
 }
 
 // Populate drop-downs
