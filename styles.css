@@ -1,3 +1,6 @@
+body {
+  background-color: rgba(209, 209, 209, 0.521);
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -7,11 +10,13 @@
 .conversion {
   display: grid;
 }
+
 .currency_conversion {
   width: 60vw;
   border: 1px solid black;
   border-radius: 4px;
-  background-color: rgba(209, 209, 209, 0.521);
+  background-color: rgba(99, 97, 97, 0.39);
+  color: whitesmoke;
 
   display: flex;
   flex-direction: column;
@@ -20,4 +25,10 @@
 
 fieldset {
   padding: 12px;
+}
+
+.resultText {
+  color: gold;
+  font-size: 1.4em;
+  font-style: italic;
 }
